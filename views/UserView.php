@@ -7,6 +7,11 @@ class UserView {
   public function AddUser() {
     require_once "templates/addUser.php";
   }
+
+  public function logIn() {
+    require_once "templates/login.php";
+  }
+
   public function notifyAddUser($status) {
     if($status) {
       echo "Add success ";
@@ -14,6 +19,15 @@ class UserView {
       echo "fail";
     }
   }
+
+  public function notifyLoginUser($status) {
+    if($status == true) {
+      echo "Login success ";
+    } else {
+      echo "fail";
+    }
+  }
+
 }
 
  ?>

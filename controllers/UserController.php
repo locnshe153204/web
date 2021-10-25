@@ -45,5 +45,38 @@ class UserController {
       $userView -> notifyAddUser($status);
   }
 
+  public function LogInForm() {
+    require_once "views/UserView.php";
+    $userView = new UserView();
+    $userView -> logIn();
+  }
+
+  public function LoginUser(){
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    $data =array(
+      'username' => $username,
+      'password' => $password
+    );
+    require_once "models/UserModel.php";
+    $userModel = new UserModel();
+    $posts = $userModel->loginUser($data);
+
+    $status = false;
+    for ( $i=0;$i<count($posts);$i++){
+      if($posts[$i]['username']==$data['username'] && $posts[$i]['password']==$data['password']) {
+        session_start();
+        $_SESSION['sessionUser'] =$posts[$i]['username'];
+        $_SESSION['sessionPassword'] =$posts[$i]['password'];
+        $status =true;
+        require_once "views/UserView.php";
+        $userView = new UserView();
+        $userView -> notifyLoginUser($status);
+      }
+    }
+
+
+  }
 }
  ?>
